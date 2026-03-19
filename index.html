@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GBD Female Cancer — Attributable Burden Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:       #0f1923;
+    --ink-2:     #2d3e50;
+    --ink-3:     #5a6e82;
+    --ink-4:     #8fa0b0;
+    --paper:     #fafaf8;
+    --paper-2:   #f0efe9;
+    --paper-3:   #e4e2d8;
+    --accent:    #1a4f72;
+    --accent-2:  #2e7aad;
+    --accent-lt: #ddeef9;
+    --green:     #0d6b4f;
+    --green-lt:  #d4f0e5;
+    --red:       #9b2335;
+    --red-lt:    #fae3e6;
+    --amber:     #8a5c00;
+    --amber-lt:  #fdf3d8;
+    --gray-lt:   #f4f3ef;
+    --rule:      #d5d2c6;
+    --tbl-head:  #1a4f72;
+    --tbl-sub:   #2e7aad;
+    --tbl-alt:   #f7f6f2;
+    --shadow:    0 2px 12px rgba(15,25,35,0.08), 0 1px 3px rgba(15,25,35,0.05);
+    --radius:    6px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .report-header {
+    background: var(--ink);
+    color: #fff;
+    padding: 56px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(46,122,173,0.18);
+    pointer-events: none;
+  }
+  .report-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(46,122,173,0.10);
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 14px;
+  }
+  .report-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    max-width: 720px;
+    margin-bottom: 20px;
+  }
+  .report-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    max-width: 580px;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .meta-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── NAV TABS ── */
+  .nav-bar {
+    background: #fff;
+    border-bottom: 1px solid var(--rule);
+    padding: 0 64px;
+    display: flex;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(15,25,35,0.06);
+  }
+  .nav-tab {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-3);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.18s;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--accent); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 64px 80px;
+  }
+
+  /* ── SECTION ── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── INTERPRETATION GUIDE ── */
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .guide-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .guide-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .guide-card-title .icon {
+    width: 28px; height: 28px;
+    background: var(--accent-lt);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .guide-card p {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+  .guide-card p:last-child { margin-bottom: 0; }
+  .guide-card strong { font-weight: 600; color: var(--ink); }
+
+  /* EAPC interpretation pills */
+  .eapc-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .eapc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+  .eapc-pill {
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    margin-top: 1px;
+  }
+  .pill-up   { background: var(--red-lt);   color: var(--red); }
+  .pill-down { background: var(--green-lt); color: var(--green); }
+  .pill-ns   { background: var(--amber-lt); color: var(--amber); }
+  .pill-na   { background: var(--gray-lt);  color: var(--ink-3); }
+
+  /* Value legend */
+  .val-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .val-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12.5px;
+  }
+  .val-badge {
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    margin-top: 1px;
+  }
+  .badge-empty  { background: var(--paper-2); color: var(--ink-4); border: 1px solid var(--rule); }
+  .badge-dash   { background: var(--paper-2); color: var(--ink-3); border: 1px solid var(--rule); }
+  .badge-notlinked { background: var(--amber-lt); color: var(--amber); }
+  .badge-absent    { background: var(--red-lt);   color: var(--red); }
+  .badge-negative  { background: #fff0f5; color: #8b1a2f; border: 1px solid #f5c0cc; }
+
+  /* ── TABLE SECTION TITLE ── */
+  .table-section {
+    margin-bottom: 48px;
+  }
+  .table-title-block {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+  .table-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .table-subtitle {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .table-badge {
+    padding: 4px 12px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── TABLE WRAPPER ── */
+  .tbl-outer {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .tbl-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    table-layout: auto;
+  }
+
+  /* ── COLSPAN HEADER ── */
+  thead tr.hdr-top th {
+    background: var(--tbl-head);
+    color: #fff;
+    padding: 10px 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  thead tr.hdr-top th:first-child {
+    text-align: left;
+    min-width: 180px;
+    border-right: 2px solid rgba(255,255,255,0.25);
+  }
+  thead tr.hdr-mid th {
+    background: var(--tbl-sub);
+    color: #fff;
+    padding: 7px 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.12);
+  }
+  thead tr.hdr-mid th:first-child {
+    text-align: left;
+    border-right: 2px solid rgba(255,255,255,0.2);
+  }
+  thead tr.hdr-bot th {
+    background: #1e5f8a;
+    color: rgba(255,255,255,0.85);
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 400;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 2px solid var(--rule);
+  }
+  thead tr.hdr-bot th:first-child {
+    text-align: left;
+    border-right: 2px solid rgba(255,255,255,0.15);
+  }
+
+  /* ── BODY ROWS ── */
+  tbody tr { border-bottom: 1px solid var(--rule); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover td { background: rgba(26,79,114,0.03); }
+
+  tbody td {
+    padding: 7px 10px;
+    color: var(--ink-2);
+    border-right: 1px solid var(--rule);
+    white-space: nowrap;
+    vertical-align: middle;
+    font-size: 12.5px;
+  }
+  tbody td:first-child {
+    font-weight: 400;
+    color: var(--ink);
+    padding-left: 14px;
+    border-right: 2px solid var(--rule);
+    white-space: normal;
+    min-width: 160px;
+  }
+  tbody td.num {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+  }
+  tbody td.eapc {
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    min-width: 160px;
+    white-space: normal;
+    line-height: 1.4;
+  }
+  tbody td:last-child { border-right: none; }
+
+  /* SECTION HEADER ROW (Global, Age Group, Location...) */
+  tr.row-section td {
+    background: var(--accent-lt);
+    color: var(--accent) !important;
+    font-weight: 700 !important;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-right: none !important;
+  }
+
+  /* PENDING ROW (Low SDI etc — file belum ada) */
+  tr.row-pending td {
+    background: var(--gray-lt);
+    color: var(--ink-4) !important;
+    font-style: italic;
+    font-size: 12px;
+  }
+  tr.row-pending td:first-child::after {
+    content: '  (pending data)';
+    font-size: 10.5px;
+    color: var(--ink-4);
+    font-style: italic;
+  }
+
+  /* ALT ROW */
+  tr.row-alt td { background: var(--tbl-alt); }
+
+  /* EAPC coloring */
+  .eapc-up   { color: var(--red);   font-weight: 500; }
+  .eapc-down { color: var(--green); font-weight: 500; }
+  .eapc-ns   { color: var(--amber); }
+  .eapc-dash { color: var(--ink-4); }
+
+  /* SPECIAL VALUES */
+  .val-na-linked  { color: var(--amber); font-size: 10.5px; font-style: italic; }
+  .val-na-absent  { color: var(--red);   font-size: 10.5px; font-style: italic; }
+  .val-negative   { color: var(--red);   font-style: italic; }
+  .val-empty      { color: var(--ink-4); }
+
+  /* TABLE 3 — Cancer type rowspan */
+  td.cancer-label {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--accent) !important;
+    vertical-align: top;
+    padding-top: 10px;
+    white-space: nowrap;
+    min-width: 130px;
+    background: var(--accent-lt);
+    border-right: 2px solid var(--rule) !important;
+    text-align: center;
+  }
+  td.rf-label {
+    min-width: 190px;
+    white-space: normal;
+    border-right: 2px solid var(--rule) !important;
+  }
+
+  /* ── FOOTNOTES ── */
+  .footnotes {
+    margin-top: 12px;
+    padding: 14px 18px;
+    background: var(--gray-lt);
+    border-left: 3px solid var(--tbl-sub);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 11.5px;
+    color: var(--ink-3);
+    line-height: 1.7;
+  }
+  .footnotes strong { font-weight: 600; color: var(--ink-2); }
+
+  /* ── INTERPRETATION CALLOUTS ── */
+  .callout {
+    display: flex;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+  }
+  .callout-info  { background: var(--accent-lt); border-color: rgba(26,79,114,0.15); }
+  .callout-warn  { background: var(--amber-lt);  border-color: rgba(138,92,0,0.15); }
+  .callout-danger{ background: var(--red-lt);    border-color: rgba(155,35,53,0.15); }
+  .callout-icon  { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body  { font-size: 13px; line-height: 1.65; }
+  .callout-body strong { font-weight: 600; }
+  .callout-info  .callout-body { color: var(--accent); }
+  .callout-warn  .callout-body { color: var(--amber); }
+  .callout-danger .callout-body { color: var(--red); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0 28px;
+  }
+  .section-divider h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: var(--ink);
+    color: #e8f4fd;
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 2;
+    margin: 12px 0;
+  }
+  .formula-comment { color: #5d9ec7; }
+
+  /* ── EXAMPLE ROW ── */
+  .example-row {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-size: 12.5px;
+    line-height: 1.8;
+    margin-top: 10px;
+    color: var(--ink-2);
+  }
+  .example-row strong { color: var(--accent); font-weight: 600; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .report-header { padding: 40px 24px 32px; }
+    .main-content  { padding: 24px 20px 60px; }
+    .nav-bar       { padding: 0 20px; }
+    .report-title  { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════════════ -->
+<header class="report-header">
+  <div class="header-eyebrow">Global Burden of Disease Study 2024 · Indonesia</div>
+  <h1 class="report-title">Female Cancer Attributable Burden:<br>High BMI, Smoking & Selected Risk Factors</h1>
+  <p class="report-subtitle">Age-standardized mortality, DALYs, and temporal trends from 1990 to 2023 across four major cancers in women.</p>
+  <div class="header-meta">
+    <div class="meta-item"><span class="meta-label">Period</span><span class="meta-value">1990 – 2023</span></div>
+    <div class="meta-item"><span class="meta-label">Cancers</span><span class="meta-value">Breast · Cervical · Ovarian · Uterine</span></div>
+    <div class="meta-item"><span class="meta-label">Locations</span><span class="meta-value">Indonesia · Global · SDI Groups</span></div>
+    <div class="meta-item"><span class="meta-label">Data Source</span><span class="meta-value">IHME GBD 2024</span></div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     NAV TABS
+══════════════════════════════════════════════════════════ -->
+<nav class="nav-bar">
+  <div class="nav-tab active" onclick="switchTab('guide')">Panduan Interpretasi</div>
+  <div class="nav-tab" onclick="switchTab('t1')">TABLE 1 — Deaths & ASMR</div>
+  <div class="nav-tab" onclick="switchTab('t2')">TABLE 2 — DALYs & ASDR</div>
+  <div class="nav-tab" onclick="switchTab('t3')">TABLE 3 — Risk Factors</div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION: PANDUAN INTERPRETASI
+══════════════════════════════════════════════════════════ -->
+<div class="main-content">
+<div id="sec-guide" class="section active">
+
+  <div class="section-divider"><h2>Panduan Membaca Tabel</h2></div>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">ℹ</div>
+    <div class="callout-body">
+      <strong>Tiga tabel ini melaporkan beban kanker yang dapat diatribusikan ke faktor risiko tertentu</strong> — bukan total beban kanker keseluruhan. Artinya, angka yang tampil adalah <em>porsi</em> kematian/DALYs yang secara kausal dikontribusikan oleh BMI tinggi, merokok, atau faktor risiko lainnya.
+    </div>
+  </div>
+
+  <!-- GRID KARTU -->
+  <div class="guide-grid">
+
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">N</div>Number (Jumlah Absolut)</div>
+      <p>Jumlah kematian atau DALYs yang dapat diatribusikan ke faktor risiko tertentu di tahun 1990 dan 2023. Mencerminkan <strong>beban absolut</strong> — dipengaruhi ukuran populasi.</p>
+      <p>Contoh: <code>Breast cancer, BMI 1990 Number = 94.98</code> → sekitar <strong>95 kematian kanker payudara</strong> di Indonesia tahun 1990 disebabkan oleh BMI tinggi.</p>
+      <p>Perbandingan 1990 vs 2023 menunjukkan apakah beban absolut <strong>naik atau turun</strong> selama 33 tahun.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">R</div>ASR — Age-Standardized Rate (per 100.000)</div>
+      <p>Rate yang sudah <strong>disesuaikan dengan struktur usia standar WHO 2000–2025</strong>, sehingga perbandingan antar lokasi dan antar waktu menjadi adil terlepas dari perbedaan komposisi usia populasi.</p>
+      <p><strong>Dua jenis ASR berbeda dalam tabel ini:</strong></p>
+      <p>① <strong>Baris Age group</strong> → <em>age-specific rate</em> untuk satu kelompok usia saja (bukan ASMR). Nilainya bisa sangat kecil untuk usia muda.</p>
+      <p>② <strong>Baris Location & Cancer type</strong> → ASMR/ASDR sejati, dihitung dari pembobotan seluruh kelompok usia dengan bobot WHO Standard Population.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">E</div>EAPC (95% CI) — Tren Tahunan</div>
+      <p><strong>Estimated Annual Percentage Change</strong> — perubahan persentase rata-rata ASR per tahun selama 1990–2023, dihitung dari regresi linear <code>ln(ASR) ~ tahun</code>.</p>
+      <div class="eapc-legend">
+        <div class="eapc-item"><span class="eapc-pill pill-up">EAPC &gt; 0, CI &gt; 0</span><span>Tren <strong>naik signifikan</strong> — beban meningkat tiap tahun, bermakna secara statistik.</span></div>
+        <div class="eapc-item"><span class="eapc-pill pill-down">EAPC &lt; 0, CI &lt; 0</span><span>Tren <strong>turun signifikan</strong> — beban menurun tiap tahun, bermakna secara statistik.</span></div>
+        <div class="eapc-item"><span class="eapc-pill pill-ns">CI mencakup 0</span><span>Tren <strong>tidak signifikan</strong> — tidak dapat disimpulkan naik atau turun.</span></div>
+        <div class="eapc-item"><span class="eapc-pill pill-na">—</span><span>Tidak dapat dihitung — terlalu sedikit nilai positif untuk regresi.</span></div>
+      </div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">F</div>Formula EAPC</div>
+      <div class="formula-box">
+        <span class="formula-comment"># Langkah 1: Regresi linear</span><br>
+        ln(ASR<sub>t</sub>) = α + β × tahun<br><br>
+        <span class="formula-comment"># Langkah 2: Konversi ke persentase</span><br>
+        EAPC = (e<sup>β</sup> − 1) × 100<br><br>
+        <span class="formula-comment"># 95% Confidence Interval</span><br>
+        CI<sub>lower</sub> = (e<sup>β − 1.96·SE</sup> − 1) × 100<br>
+        CI<sub>upper</sub> = (e<sup>β + 1.96·SE</sup> − 1) × 100
+      </div>
+      <p>SE adalah standard error dari koefisien β hasil regresi. Semakin sempit interval CI, semakin presisi estimasi tren.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">V</div>Kode Nilai Khusus</div>
+      <div class="val-legend">
+        <div class="val-item"><span class="val-badge badge-empty">(kosong)</span><span>Baris header section (Global, Age Group, Location) — bukan data, hanya pemisah visual.</span></div>
+        <div class="val-item"><span class="val-badge badge-dash">—</span><span>Data tidak tersedia untuk kombinasi ini di dataset GBD yang didownload.</span></div>
+        <div class="val-item"><span class="val-badge badge-notlinked">N/A (not linked)</span><span>Kombinasi risk factor + kanker tidak memiliki dasar epidemiologi di model GBD — tidak dihitung.</span></div>
+        <div class="val-item"><span class="val-badge badge-absent">N/A (data absent)</span><span>High LDL cholesterol tidak tersedia di dataset GBD 2024 yang didownload.</span></div>
+        <div class="val-item"><span class="val-badge badge-negative">Nilai negatif</span><span>Berasal dari data GBD aslinya — bukan error script. Lihat penjelasan di bawah.</span></div>
+      </div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">!</div>Tentang Nilai Negatif</div>
+      <div class="callout callout-warn" style="margin-bottom:10px">
+        <div class="callout-icon" style="font-size:14px">⚠</div>
+        <div class="callout-body" style="font-size:12px"><strong>Ini bukan error.</strong> Nilai negatif berasal dari data GBD itu sendiri.</div>
+      </div>
+      <p>GBD menggunakan model statistik Bayesian (<em>DisMod-MR</em>). Pada kelompok usia <strong>muda (20–49 tahun)</strong> untuk kanker yang jarang pada usia tersebut, uncertainty interval yang sangat besar dapat menghasilkan point estimate negatif pada <em>attributable burden</em>.</p>
+      <p>Secara substantif, nilai negatif dibaca sebagai <strong>"beban mendekati nol / tidak terdeteksi secara andal"</strong> — bukan bahwa faktor risiko melindungi dari kanker.</p>
+      <p><strong>Saat menulis paper:</strong> Sel ini lazimnya ditulis <code>0</code> atau <code>—</code> disertai catatan kaki: <em>"Negative values represent estimates within uncertainty range and should be interpreted as negligible burden."</em></p>
+    </div>
+
+  </div><!-- /guide-grid -->
+
+  <div class="section-divider"><h2>Struktur Tabel & Cara Baca Per Bagian</h2></div>
+
+  <div class="guide-grid">
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">A</div>Bagian Age Group</div>
+      <p>Data dari <strong>lokasi Global</strong>. Menampilkan beban attributable per kelompok usia 5-tahunan, dari 20–24 hingga 95+. ASR di sini adalah <em>age-specific rate</em>, bukan ASMR.</p>
+      <p>Gunakan untuk melihat <strong>pola distribusi usia</strong>: pada kelompok usia berapa beban tertinggi, dan bagaimana tren tiap kelompok usia berubah dari 1990 ke 2023.</p>
+      <p>Perhatian: BMI baris usia 25–49 menampilkan nilai negatif untuk kanker payudara global — ini interpretasikan sebagai beban tidak terdeteksi (lihat penjelasan nilai negatif).</p>
+    </div>
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">B</div>Bagian Location</div>
+      <p>Aggregate <strong>semua kelompok usia</strong> per lokasi. ASR di sini adalah ASMR/ASDR sejati yang dihitung dengan WHO Standard Population. Gunakan untuk <strong>perbandingan lintas SDI</strong>.</p>
+      <p>Saat ini hanya Indonesia yang terisi — Low SDI hingga High SDI menunggu file data masing-masing lokasi didownload. Setelah semua file tersedia dan script dijalankan ulang, baris ini akan terisi otomatis.</p>
+    </div>
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">C</div>Bagian Types of Women's Cancers</div>
+      <p>Aggregate <strong>semua usia, lokasi Indonesia</strong>. Memperlihatkan kontribusi masing-masing jenis kanker terhadap beban total yang diatribusikan ke BMI atau Smoking.</p>
+      <p>BMI hanya dikaitkan dengan Breast, Ovarian, dan Uterine cancer — bukan Cervical (ditampilkan N/A not linked). Smoking dikaitkan dengan Breast dan Cervical cancer — bukan Ovarian dan Uterine.</p>
+    </div>
+    <div class="guide-card">
+      <div class="guide-card-title"><div class="icon">D</div>TABLE 3 — Faktor Risiko Lain</div>
+      <p>Berbeda dari TABLE 1 & 2: lokasi <strong>hanya Indonesia</strong>, menampilkan Deaths dan DALYs secara bersamaan, dan risk factor yang ditampilkan adalah selain BMI dan Smoking.</p>
+      <p>Risk factor yang ada di data: High alcohol use, High fasting plasma glucose, Diet high in red meat, Low physical activity (semua hanya untuk Breast cancer), dan Unsafe sex (hanya Cervical cancer).</p>
+      <p>High LDL cholesterol ditampilkan sebagai <em>N/A (data absent)</em> karena tidak tersedia di dataset GBD 2024 yang didownload.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"><h2>Contoh Kalimat Pelaporan untuk Paper</h2></div>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">✍</div>
+    <div class="callout-body">
+      <strong>Tren signifikan naik:</strong><br>
+      <em>"The ASMR of deaths attributable to high BMI in Indonesia increased significantly from 0.56 per 100,000 in 1990 to 2.34 per 100,000 in 2023, with an EAPC of 4.77 (95% CI: 4.61 to 4.92)."</em>
+    </div>
+  </div>
+  <div class="callout callout-warn" style="margin-top:12px">
+    <div class="callout-icon">✍</div>
+    <div class="callout-body">
+      <strong>Tren tidak signifikan:</strong><br>
+      <em>"No significant trend was observed for smoking-attributable deaths in Indonesia (EAPC: 0.13; 95% CI: −0.20 to 0.47)."</em>
+    </div>
+  </div>
+  <div class="callout callout-danger" style="margin-top:12px">
+    <div class="callout-icon">✍</div>
+    <div class="callout-body">
+      <strong>Catatan kaki untuk nilai negatif:</strong><br>
+      <em>"Negative values represent estimates within the uncertainty range of the GBD model and should be interpreted as negligible attributable burden."</em>
+    </div>
+  </div>
+
+</div><!-- /sec-guide -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION: TABLE 1
+══════════════════════════════════════════════════════════ -->
+<div id="sec-t1" class="section">
+  <div class="section-divider"><h2>TABLE 1</h2></div>
+  <div class="table-section">
+    <div class="table-title-block">
+      <div>
+        <div class="table-title">Deaths and ASMR for Women Cancer Attributable to High BMI and Smoking (1990–2023)</div>
+        <div class="table-subtitle">Age group: Global · Location & Cancer type: Indonesia · ASMR per 100,000 · EAPC via ln(ASR)~year regression</div>
+      </div>
+      <span class="table-badge">Deaths</span>
+    </div>
+    <div class="tbl-outer">
+      <div class="tbl-scroll">
+        <table id="tbl1"></table>
+      </div>
+    </div>
+    <div class="footnotes">
+      <strong>Abbreviations:</strong> ASMR = Age-Standardized Mortality Rate; BMI = Body-Mass Index; EAPC = Estimated Annual Percentage Change; CI = Confidence Interval; SDI = Socio-Demographic Index.<br>
+      <strong>Notes:</strong> Number = attributable deaths (not total cancer deaths). ASR in Age group rows = age-specific rate; ASR in Location/Cancer rows = ASMR (WHO 2000–2025 Std Pop). Negative values: within GBD model uncertainty — interpret as negligible burden. — = data unavailable. N/A (not linked) = no established causal link in GBD model. SDI rows pending additional data files.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION: TABLE 2
+══════════════════════════════════════════════════════════ -->
+<div id="sec-t2" class="section">
+  <div class="section-divider"><h2>TABLE 2</h2></div>
+  <div class="table-section">
+    <div class="table-title-block">
+      <div>
+        <div class="table-title">DALYs and ASDR for Women Cancer Attributable to High BMI and Smoking (1990–2023)</div>
+        <div class="table-subtitle">Age group: Global · Location & Cancer type: Indonesia · ASDR per 100,000 · EAPC via ln(ASDR)~year regression</div>
+      </div>
+      <span class="table-badge">DALYs</span>
+    </div>
+    <div class="tbl-outer">
+      <div class="tbl-scroll">
+        <table id="tbl2"></table>
+      </div>
+    </div>
+    <div class="footnotes">
+      <strong>Abbreviations:</strong> ASDR = Age-Standardized DALYs Rate; DALYs = Disability-Adjusted Life Years; EAPC = Estimated Annual Percentage Change; CI = Confidence Interval.<br>
+      <strong>Notes:</strong> Same methodology as TABLE 1. DALYs = YLL (Years of Life Lost) + YLD (Years Lived with Disability). Larger DALYs values reflect combined mortality and morbidity burden.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION: TABLE 3
+══════════════════════════════════════════════════════════ -->
+<div id="sec-t3" class="section">
+  <div class="section-divider"><h2>TABLE 3</h2></div>
+  <div class="table-section">
+    <div class="table-title-block">
+      <div>
+        <div class="table-title">Deaths and DALYs for Breast and Cervical Cancer Attributable to Selected Risk Factors (1990–2023)</div>
+        <div class="table-subtitle">Location: Indonesia only · All ages aggregate · ASMR/ASDR per 100,000 · Excludes BMI and Smoking (reported in TABLE 1 & 2)</div>
+      </div>
+      <span class="table-badge">Other Risk Factors</span>
+    </div>
+    <div class="tbl-outer">
+      <div class="tbl-scroll">
+        <table id="tbl3"></table>
+      </div>
+    </div>
+    <div class="footnotes">
+      <strong>Risk factor linkage in GBD 2024:</strong> High alcohol use, High fasting plasma glucose, Diet high in red meat, and Low physical activity → Breast cancer only. Unsafe sex → Cervical cancer only. High LDL cholesterol: not available in this GBD dataset download.<br>
+      <strong>N/A (not linked)</strong> = no causal pathway established in GBD model. <strong>N/A (data absent)</strong> = risk factor not included in downloaded dataset.
+    </div>
+  </div>
+</div>
+
+</div><!-- /main-content -->
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const SECTION_HEADERS = new Set(['Global','Age Group','Location',"Types of Women's Cancers"]);
+const SDI_PENDING     = new Set(['Low SDI','Low-middle SDI','Middle SDI','High-middle SDI','High SDI']);
+
+const T1 = [
+  {Characteristics:"Global",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Age Group",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"20-24 years",BMI_1990_Number:"15.01",BMI_1990_ASR:"0.0061",BMI_2023_Number:"15.32",BMI_2023_ASR:"0.0052",BMI_EAPC_95CI:"-1.44 (-1.92 to -0.94)",SMK_1990_Number:"—",SMK_1990_ASR:"—",SMK_2023_Number:"—",SMK_2023_ASR:"—",SMK_EAPC_95CI:"—"},
+  {Characteristics:"25-29 years",BMI_1990_Number:"14.48",BMI_1990_ASR:"0.0066",BMI_2023_Number:"-41.52",BMI_2023_ASR:"-0.0143",BMI_EAPC_95CI:"-15.06 (-22.94 to -6.37)",SMK_1990_Number:"—",SMK_1990_ASR:"—",SMK_2023_Number:"—",SMK_2023_ASR:"—",SMK_EAPC_95CI:"—"},
+  {Characteristics:"30-34 years",BMI_1990_Number:"-62.20",BMI_1990_ASR:"-0.0327",BMI_2023_Number:"-395.16",BMI_2023_ASR:"-0.1342",BMI_EAPC_95CI:"—",SMK_1990_Number:"811.62",SMK_1990_ASR:"0.4261",SMK_2023_Number:"610.20",SMK_2023_ASR:"0.2073",SMK_EAPC_95CI:"-2.32 (-2.50 to -2.14)"},
+  {Characteristics:"35-39 years",BMI_1990_Number:"-158.13",BMI_1990_ASR:"-0.0911",BMI_2023_Number:"-781.22",BMI_2023_ASR:"-0.2710",BMI_EAPC_95CI:"—",SMK_1990_Number:"1,626.65",SMK_1990_ASR:"0.9370",SMK_2023_Number:"1,297.26",SMK_2023_ASR:"0.4500",SMK_EAPC_95CI:"-2.59 (-2.82 to -2.36)"},
+  {Characteristics:"40-44 years",BMI_1990_Number:"-285.39",BMI_1990_ASR:"-0.2030",BMI_2023_Number:"-730.64",BMI_2023_ASR:"-0.2864",BMI_EAPC_95CI:"—",SMK_1990_Number:"2,554.47",SMK_1990_ASR:"1.8174",SMK_2023_Number:"2,201.01",SMK_2023_ASR:"0.8626",SMK_EAPC_95CI:"-2.75 (-2.94 to -2.56)"},
+  {Characteristics:"45-49 years",BMI_1990_Number:"-194.60",BMI_1990_ASR:"-0.1708",BMI_2023_Number:"-102.55",BMI_2023_ASR:"-0.0437",BMI_EAPC_95CI:"-9.58 (-15.81 to -2.89)",SMK_1990_Number:"3,122.74",SMK_1990_ASR:"2.7407",SMK_2023_Number:"3,036.02",SMK_2023_ASR:"1.2940",SMK_EAPC_95CI:"-2.71 (-2.85 to -2.57)"},
+  {Characteristics:"50-54 years",BMI_1990_Number:"4,656.29",BMI_1990_ASR:"4.4316",BMI_2023_Number:"11,541.65",BMI_2023_ASR:"5.0952",BMI_EAPC_95CI:"0.11 (0.01 to 0.20)",SMK_1990_Number:"3,924.49",SMK_1990_ASR:"3.7351",SMK_2023_Number:"4,095.63",SMK_2023_ASR:"1.8081",SMK_EAPC_95CI:"-2.39 (-2.52 to -2.26)"},
+  {Characteristics:"55-59 years",BMI_1990_Number:"5,549.25",BMI_1990_ASR:"6.0055",BMI_2023_Number:"13,547.37",BMI_2023_ASR:"6.4604",BMI_EAPC_95CI:"0.02 (-0.06 to 0.11)",SMK_1990_Number:"4,345.54",SMK_1990_ASR:"4.7028",SMK_2023_Number:"4,981.68",SMK_2023_ASR:"2.3756",SMK_EAPC_95CI:"-2.00 (-2.06 to -1.93)"},
+  {Characteristics:"60-64 years",BMI_1990_Number:"6,885.79",BMI_1990_ASR:"8.3766",BMI_2023_Number:"15,302.81",BMI_2023_ASR:"8.7341",BMI_EAPC_95CI:"0.05 (-0.03 to 0.14)",SMK_1990_Number:"4,302.69",SMK_1990_ASR:"5.2343",SMK_2023_Number:"4,738.43",SMK_2023_ASR:"2.7045",SMK_EAPC_95CI:"-2.04 (-2.10 to -1.97)"},
+  {Characteristics:"65-69 years",BMI_1990_Number:"7,045.73",BMI_1990_ASR:"10.6045",BMI_2023_Number:"16,020.07",BMI_2023_ASR:"10.6816",BMI_EAPC_95CI:"-0.13 (-0.20 to -0.05)",SMK_1990_Number:"3,859.09",SMK_1990_ASR:"5.8083",SMK_2023_Number:"4,245.60",SMK_2023_ASR:"2.8308",SMK_EAPC_95CI:"-2.07 (-2.14 to -1.99)"},
+  {Characteristics:"70-79 years",BMI_1990_Number:"10,965.52",BMI_1990_ASR:"13.0205",BMI_2023_Number:"26,535.37",BMI_2023_ASR:"13.3921",BMI_EAPC_95CI:"-0.13 (-0.22 to -0.05)",SMK_1990_Number:"4,976.67",SMK_1990_ASR:"5.9816",SMK_2023_Number:"5,714.36",SMK_2023_ASR:"2.8805",SMK_EAPC_95CI:"-2.31 (-2.37 to -2.26)"},
+  {Characteristics:"80-84 years",BMI_1990_Number:"3,695.66",BMI_1990_ASR:"16.4721",BMI_2023_Number:"9,251.04",BMI_2023_ASR:"17.3236",BMI_EAPC_95CI:"-0.01 (-0.08 to 0.06)",SMK_1990_Number:"1,213.53",SMK_1990_ASR:"5.4089",SMK_2023_Number:"1,625.12",SMK_2023_ASR:"3.0432",SMK_EAPC_95CI:"-1.99 (-2.16 to -1.81)"},
+  {Characteristics:"85-89 years",BMI_1990_Number:"1,874.42",BMI_1990_ASR:"18.1102",BMI_2023_Number:"6,233.07",BMI_2023_ASR:"19.8027",BMI_EAPC_95CI:"0.14 (0.03 to 0.25)",SMK_1990_Number:"486.32",SMK_1990_ASR:"4.6987",SMK_2023_Number:"886.38",SMK_2023_ASR:"2.8161",SMK_EAPC_95CI:"-1.90 (-2.22 to -1.57)"},
+  {Characteristics:"90-94 years",BMI_1990_Number:"676.26",BMI_1990_ASR:"21.3208",BMI_2023_Number:"3,300.14",BMI_2023_ASR:"24.8589",BMI_EAPC_95CI:"0.56 (0.48 to 0.65)",SMK_1990_Number:"107.70",SMK_1990_ASR:"3.3955",SMK_2023_Number:"322.84",SMK_2023_ASR:"2.4319",SMK_EAPC_95CI:"-0.97 (-1.26 to -0.69)"},
+  {Characteristics:"95+ years",BMI_1990_Number:"155.94",BMI_1990_ASR:"19.4912",BMI_2023_Number:"1,207.45",BMI_2023_ASR:"26.9631",BMI_EAPC_95CI:"1.04 (0.96 to 1.11)",SMK_1990_Number:"35.02",SMK_1990_ASR:"4.3775",SMK_2023_Number:"159.46",SMK_2023_ASR:"3.5609",SMK_EAPC_95CI:"-0.53 (-0.61 to -0.45)"},
+  {Characteristics:"Location",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Indonesia",BMI_1990_Number:"212.42",BMI_1990_ASR:"0.5625",BMI_2023_Number:"2,362.56",BMI_2023_ASR:"2.3383",BMI_EAPC_95CI:"4.77 (4.61 to 4.92)",SMK_1990_Number:"207.49",SMK_1990_ASR:"0.7352",SMK_2023_Number:"549.89",SMK_2023_ASR:"0.7371",SMK_EAPC_95CI:"0.13 (-0.20 to 0.47)"},
+  {Characteristics:"Low SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Low-middle SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Middle SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"High-middle SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"High SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Types of Women's Cancers",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Breast cancer",BMI_1990_Number:"94.98",BMI_1990_ASR:"0.2599",BMI_2023_Number:"1,087.47",BMI_2023_ASR:"1.0807",BMI_EAPC_95CI:"4.71 (4.54 to 4.88)",SMK_1990_Number:"38.21",SMK_1990_ASR:"0.1363",SMK_2023_Number:"144.57",SMK_2023_ASR:"0.1941",SMK_EAPC_95CI:"1.05 (0.72 to 1.39)"},
+  {Characteristics:"Cervical cancer",BMI_1990_Number:"N/A",BMI_1990_ASR:"N/A",BMI_2023_Number:"N/A",BMI_2023_ASR:"N/A",BMI_EAPC_95CI:"N/A (not linked)",SMK_1990_Number:"169.28",SMK_1990_ASR:"0.5989",SMK_2023_Number:"405.32",SMK_2023_ASR:"0.5430",SMK_EAPC_95CI:"-0.13 (-0.47 to 0.20)"},
+  {Characteristics:"Ovarian cancer",BMI_1990_Number:"18.65",BMI_1990_ASR:"0.0460",BMI_2023_Number:"402.39",BMI_2023_ASR:"0.3923",BMI_EAPC_95CI:"7.08 (6.91 to 7.26)",SMK_1990_Number:"N/A",SMK_1990_ASR:"N/A",SMK_2023_Number:"N/A",SMK_2023_ASR:"N/A",SMK_EAPC_95CI:"N/A (not linked)"},
+  {Characteristics:"Uterine cancer",BMI_1990_Number:"98.80",BMI_1990_ASR:"0.2566",BMI_2023_Number:"872.71",BMI_2023_ASR:"0.8654",BMI_EAPC_95CI:"4.15 (3.99 to 4.30)",SMK_1990_Number:"N/A",SMK_1990_ASR:"N/A",SMK_2023_Number:"N/A",SMK_2023_ASR:"N/A",SMK_EAPC_95CI:"N/A (not linked)"},
+];
+
+const T2 = [
+  {Characteristics:"Global",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Age Group",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"20-24 years",BMI_1990_Number:"1,023.88",BMI_1990_ASR:"0.4188",BMI_2023_Number:"1,023.45",BMI_2023_ASR:"0.3452",BMI_EAPC_95CI:"-1.49 (-1.97 to -1.01)",SMK_1990_Number:"—",SMK_1990_ASR:"—",SMK_2023_Number:"—",SMK_2023_ASR:"—",SMK_EAPC_95CI:"—"},
+  {Characteristics:"25-29 years",BMI_1990_Number:"873.52",BMI_1990_ASR:"0.3963",BMI_2023_Number:"-2,852.35",BMI_2023_ASR:"-0.9849",BMI_EAPC_95CI:"-8.89 (-13.17 to -4.40)",SMK_1990_Number:"—",SMK_1990_ASR:"—",SMK_2023_Number:"—",SMK_2023_ASR:"—",SMK_EAPC_95CI:"—"},
+  {Characteristics:"30-34 years",BMI_1990_Number:"-3,773.51",BMI_1990_ASR:"-1.9809",BMI_2023_Number:"-23,560.04",BMI_2023_ASR:"-8.0023",BMI_EAPC_95CI:"—",SMK_1990_Number:"50,290.65",SMK_1990_ASR:"26.4005",SMK_2023_Number:"37,640.64",SMK_2023_ASR:"12.7849",SMK_EAPC_95CI:"-2.32 (-2.51 to -2.13)"},
+  {Characteristics:"35-39 years",BMI_1990_Number:"-8,630.05",BMI_1990_ASR:"-4.9711",BMI_2023_Number:"-42,181.37",BMI_2023_ASR:"-14.6321",BMI_EAPC_95CI:"—",SMK_1990_Number:"90,665.36",SMK_1990_ASR:"52.2248",SMK_2023_Number:"72,536.05",SMK_2023_ASR:"25.1616",SMK_EAPC_95CI:"-2.58 (-2.81 to -2.34)"},
+  {Characteristics:"40-44 years",BMI_1990_Number:"-14,372.32",BMI_1990_ASR:"-10.2250",BMI_2023_Number:"-35,934.97",BMI_2023_ASR:"-14.0837",BMI_EAPC_95CI:"—",SMK_1990_Number:"128,051.05",SMK_1990_ASR:"91.1006",SMK_2023_Number:"110,905.03",SMK_2023_ASR:"43.4661",SMK_EAPC_95CI:"-2.72 (-2.91 to -2.54)"},
+  {Characteristics:"45-49 years",BMI_1990_Number:"-8,959.34",BMI_1990_ASR:"-7.8634",BMI_2023_Number:"-3,569.76",BMI_2023_ASR:"-1.5215",BMI_EAPC_95CI:"-3.32 (-8.52 to 2.17)",SMK_1990_Number:"139,701.54",SMK_1990_ASR:"122.6122",SMK_2023_Number:"136,998.89",SMK_2023_ASR:"58.3928",SMK_EAPC_95CI:"-2.69 (-2.82 to -2.55)"},
+  {Characteristics:"50-54 years",BMI_1990_Number:"187,990.87",BMI_1990_ASR:"178.9173",BMI_2023_Number:"471,691.62",BMI_2023_ASR:"208.2351",BMI_EAPC_95CI:"0.15 (0.06 to 0.24)",SMK_1990_Number:"155,269.33",SMK_1990_ASR:"147.7751",SMK_2023_Number:"163,653.25",SMK_2023_ASR:"72.2471",SMK_EAPC_95CI:"-2.36 (-2.49 to -2.23)"},
+  {Characteristics:"55-59 years",BMI_1990_Number:"196,971.25",BMI_1990_ASR:"213.1672",BMI_2023_Number:"488,901.43",BMI_2023_ASR:"233.1457",BMI_EAPC_95CI:"0.08 (-0.00 to 0.16)",SMK_1990_Number:"150,563.30",SMK_1990_ASR:"162.9433",SMK_2023_Number:"174,642.18",SMK_2023_ASR:"83.2828",SMK_EAPC_95CI:"-1.96 (-2.02 to -1.89)"},
+  {Characteristics:"60-64 years",BMI_1990_Number:"211,323.02",BMI_1990_ASR:"257.0757",BMI_2023_Number:"478,569.62",BMI_2023_ASR:"273.1442",BMI_EAPC_95CI:"0.13 (0.05 to 0.21)",SMK_1990_Number:"128,933.69",SMK_1990_ASR:"156.8486",SMK_2023_Number:"143,831.08",SMK_2023_ASR:"82.0918",SMK_EAPC_95CI:"-1.99 (-2.05 to -1.93)"},
+  {Characteristics:"65-69 years",BMI_1990_Number:"183,263.93",BMI_1990_ASR:"275.8285",BMI_2023_Number:"423,746.57",BMI_2023_ASR:"282.5377",BMI_EAPC_95CI:"-0.05 (-0.12 to 0.02)",SMK_1990_Number:"97,795.21",SMK_1990_ASR:"147.1905",SMK_2023_Number:"108,810.21",SMK_2023_ASR:"72.5504",SMK_EAPC_95CI:"-2.02 (-2.10 to -1.94)"},
+  {Characteristics:"70-79 years",BMI_1990_Number:"212,313.12",BMI_1990_ASR:"253.7970",BMI_2023_Number:"529,856.56",BMI_2023_ASR:"267.0730",BMI_EAPC_95CI:"-0.07 (-0.16 to 0.01)",SMK_1990_Number:"95,671.44",SMK_1990_ASR:"115.6957",SMK_2023_Number:"111,478.07",SMK_2023_ASR:"56.1258",SMK_EAPC_95CI:"-2.28 (-2.33 to -2.23)"},
+  {Characteristics:"80-84 years",BMI_1990_Number:"49,826.61",BMI_1990_ASR:"222.0847",BMI_2023_Number:"125,986.22",BMI_2023_ASR:"235.9234",BMI_EAPC_95CI:"0.03 (-0.04 to 0.10)",SMK_1990_Number:"15,883.60",SMK_1990_ASR:"70.7956",SMK_2023_Number:"21,485.43",SMK_2023_ASR:"40.2339",SMK_EAPC_95CI:"-1.96 (-2.13 to -1.78)"},
+  {Characteristics:"85-89 years",BMI_1990_Number:"20,318.57",BMI_1990_ASR:"196.3129",BMI_2023_Number:"68,341.14",BMI_2023_ASR:"217.1224",BMI_EAPC_95CI:"0.18 (0.07 to 0.29)",SMK_1990_Number:"5,073.62",SMK_1990_ASR:"49.0201",SMK_2023_Number:"9,376.89",SMK_2023_ASR:"29.7907",SMK_EAPC_95CI:"-1.85 (-2.18 to -1.53)"},
+  {Characteristics:"90-94 years",BMI_1990_Number:"6,199.80",BMI_1990_ASR:"195.4634",BMI_2023_Number:"30,349.40",BMI_2023_ASR:"228.6124",BMI_EAPC_95CI:"0.59 (0.50 to 0.68)",SMK_1990_Number:"965.01",SMK_1990_ASR:"30.4242",SMK_2023_Number:"2,927.22",SMK_2023_ASR:"22.0498",SMK_EAPC_95CI:"-0.93 (-1.21 to -0.64)"},
+  {Characteristics:"95+ years",BMI_1990_Number:"1,336.80",BMI_1990_ASR:"167.0916",BMI_2023_Number:"10,192.44",BMI_2023_ASR:"227.6027",BMI_EAPC_95CI:"1.00 (0.92 to 1.08)",SMK_1990_Number:"293.72",SMK_1990_ASR:"36.7138",SMK_2023_Number:"1,331.11",SMK_2023_ASR:"29.7245",SMK_EAPC_95CI:"-0.54 (-0.62 to -0.45)"},
+  {Characteristics:"Location",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Indonesia",BMI_1990_Number:"7,498.48",BMI_1990_ASR:"19.0328",BMI_2023_Number:"84,862.41",BMI_2023_ASR:"82.7032",BMI_EAPC_95CI:"5.08 (4.93 to 5.23)",SMK_1990_Number:"7,348.94",SMK_1990_ASR:"24.6552",SMK_2023_Number:"19,766.96",SMK_2023_ASR:"25.7611",SMK_EAPC_95CI:"0.14 (-0.14 to 0.42)"},
+  {Characteristics:"Low SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Low-middle SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Middle SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"High-middle SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"High SDI",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Types of Women's Cancers",BMI_1990_Number:"",BMI_1990_ASR:"",BMI_2023_Number:"",BMI_2023_ASR:"",BMI_EAPC_95CI:"",SMK_1990_Number:"",SMK_1990_ASR:"",SMK_2023_Number:"",SMK_2023_ASR:"",SMK_EAPC_95CI:""},
+  {Characteristics:"Breast cancer",BMI_1990_Number:"3,059.01",BMI_1990_ASR:"8.1077",BMI_2023_Number:"35,888.88",BMI_2023_ASR:"34.9876",BMI_EAPC_95CI:"5.12 (4.96 to 5.29)",SMK_1990_Number:"1,344.24",SMK_1990_ASR:"4.5478",SMK_2023_Number:"5,174.28",SMK_2023_ASR:"6.7451",SMK_EAPC_95CI:"1.31 (0.99 to 1.63)"},
+  {Characteristics:"Cervical cancer",BMI_1990_Number:"N/A",BMI_1990_ASR:"N/A",BMI_2023_Number:"N/A",BMI_2023_ASR:"N/A",BMI_EAPC_95CI:"N/A (not linked)",SMK_1990_Number:"6,004.71",SMK_1990_ASR:"20.1075",SMK_2023_Number:"14,592.68",SMK_2023_ASR:"19.0160",SMK_EAPC_95CI:"-0.07 (-0.35 to 0.21)"},
+  {Characteristics:"Ovarian cancer",BMI_1990_Number:"745.21",BMI_1990_ASR:"1.7839",BMI_2023_Number:"16,256.06",BMI_2023_ASR:"15.7663",BMI_EAPC_95CI:"7.41 (7.23 to 7.58)",SMK_1990_Number:"N/A",SMK_1990_ASR:"N/A",SMK_2023_Number:"N/A",SMK_2023_ASR:"N/A",SMK_EAPC_95CI:"N/A (not linked)"},
+  {Characteristics:"Uterine cancer",BMI_1990_Number:"3,694.26",BMI_1990_ASR:"9.1412",BMI_2023_Number:"32,717.48",BMI_2023_ASR:"31.9493",BMI_EAPC_95CI:"4.43 (4.28 to 4.59)",SMK_1990_Number:"N/A",SMK_1990_ASR:"N/A",SMK_2023_Number:"N/A",SMK_2023_ASR:"N/A",SMK_EAPC_95CI:"N/A (not linked)"},
+];
+
+const T3 = [
+  {CancerType:"Breast cancer",RiskFactor:"High alcohol use",D_N90:"1.08",D_A90:"0.0025",D_N23:"2.88",D_A23:"0.0028",D_EAPC:"0.45 (0.31 to 0.59)",DA_N90:"50.48",DA_A90:"0.1123",DA_N23:"138.65",DA_A23:"0.1353",DA_EAPC:"0.63 (0.49 to 0.78)"},
+  {CancerType:"Breast cancer",RiskFactor:"High fasting plasma glucose",D_N90:"224.96",D_A90:"0.6970",D_N23:"1,191.70",D_A23:"1.3782",D_EAPC:"2.18 (2.03 to 2.34)",DA_N90:"7,907.48",DA_A90:"22.9787",DA_N23:"42,658.81",DA_A23:"47.9809",DA_EAPC:"2.39 (2.21 to 2.56)"},
+  {CancerType:"Breast cancer",RiskFactor:"High LDL cholesterol",D_N90:"N/A (data absent)",D_A90:"N/A (data absent)",D_N23:"N/A (data absent)",D_A23:"N/A (data absent)",D_EAPC:"N/A (data absent)",DA_N90:"N/A (data absent)",DA_A90:"N/A (data absent)",DA_N23:"N/A (data absent)",DA_A23:"N/A (data absent)",DA_EAPC:"N/A (data absent)"},
+  {CancerType:"Breast cancer",RiskFactor:"Diet high in red meat",D_N90:"339.47",D_A90:"0.9826",D_N23:"1,838.52",D_A23:"2.0847",D_EAPC:"2.42 (2.25 to 2.59)",DA_N90:"13,389.91",DA_A90:"36.7626",DA_N23:"72,549.90",DA_A23:"80.9754",DA_EAPC:"2.56 (2.37 to 2.75)"},
+  {CancerType:"Breast cancer",RiskFactor:"Low physical activity",D_N90:"182.32",D_A90:"0.5822",D_N23:"855.53",D_A23:"1.0035",D_EAPC:"1.75 (1.61 to 1.89)",DA_N90:"6,056.35",DA_A90:"18.0865",DA_N23:"28,982.80",DA_A23:"32.8494",DA_EAPC:"1.95 (1.78 to 2.11)"},
+  {CancerType:"Breast cancer",RiskFactor:"Unsafe sex",D_N90:"N/A (not linked)",D_A90:"N/A (not linked)",D_N23:"N/A (not linked)",D_A23:"N/A (not linked)",D_EAPC:"N/A (not linked)",DA_N90:"N/A (not linked)",DA_A90:"N/A (not linked)",DA_N23:"N/A (not linked)",DA_A23:"N/A (not linked)",DA_EAPC:"N/A (not linked)"},
+  {CancerType:"Cervical cancer",RiskFactor:"High alcohol use",D_N90:"N/A (not linked)",D_A90:"N/A (not linked)",D_N23:"N/A (not linked)",D_A23:"N/A (not linked)",D_EAPC:"N/A (not linked)",DA_N90:"N/A (not linked)",DA_A90:"N/A (not linked)",DA_N23:"N/A (not linked)",DA_A23:"N/A (not linked)",DA_EAPC:"N/A (not linked)"},
+  {CancerType:"Cervical cancer",RiskFactor:"High fasting plasma glucose",D_N90:"N/A (not linked)",D_A90:"N/A (not linked)",D_N23:"N/A (not linked)",D_A23:"N/A (not linked)",D_EAPC:"N/A (not linked)",DA_N90:"N/A (not linked)",DA_A90:"N/A (not linked)",DA_N23:"N/A (not linked)",DA_A23:"N/A (not linked)",DA_EAPC:"N/A (not linked)"},
+  {CancerType:"Cervical cancer",RiskFactor:"High LDL cholesterol",D_N90:"N/A (data absent)",D_A90:"N/A (data absent)",D_N23:"N/A (data absent)",D_A23:"N/A (data absent)",D_EAPC:"N/A (data absent)",DA_N90:"N/A (data absent)",DA_A90:"N/A (data absent)",DA_N23:"N/A (data absent)",DA_A23:"N/A (data absent)",DA_EAPC:"N/A (data absent)"},
+  {CancerType:"Cervical cancer",RiskFactor:"Diet high in red meat",D_N90:"N/A (not linked)",D_A90:"N/A (not linked)",D_N23:"N/A (not linked)",D_A23:"N/A (not linked)",D_EAPC:"N/A (not linked)",DA_N90:"N/A (not linked)",DA_A90:"N/A (not linked)",DA_N23:"N/A (not linked)",DA_A23:"N/A (not linked)",DA_EAPC:"N/A (not linked)"},
+  {CancerType:"Cervical cancer",RiskFactor:"Low physical activity",D_N90:"N/A (not linked)",D_A90:"N/A (not linked)",D_N23:"N/A (not linked)",D_A23:"N/A (not linked)",D_EAPC:"N/A (not linked)",DA_N90:"N/A (not linked)",DA_A90:"N/A (not linked)",DA_N23:"N/A (not linked)",DA_A23:"N/A (not linked)",DA_EAPC:"N/A (not linked)"},
+  {CancerType:"Cervical cancer",RiskFactor:"Unsafe sex",D_N90:"3,677.94",D_A90:"9.3010",D_N23:"10,997.63",D_A23:"10.9790",D_EAPC:"0.83 (0.62 to 1.03)",DA_N90:"144,941.65",DA_A90:"343.7976",DA_N23:"435,417.73",DA_A23:"427.3308",DA_EAPC:"1.01 (0.80 to 1.22)"},
+];
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function classifyRow(char) {
+  if (SECTION_HEADERS.has(char)) return 'section';
+  if (SDI_PENDING.has(char))     return 'pending';
+  return 'data';
+}
+
+function eapcClass(v) {
+  if (!v || v === '—' || v.startsWith('N/A')) return 'eapc-dash';
+  const m = v.match(/^(-?[\d.]+)/);
+  if (!m) return 'eapc-dash';
+  const n = parseFloat(m[1]);
+  // check CI
+  const ci = v.match(/\((-?[\d.]+) to (-?[\d.]+)\)/);
+  if (!ci) return 'eapc-dash';
+  const lo = parseFloat(ci[1]), hi = parseFloat(ci[2]);
+  if (lo > 0) return 'eapc-up';
+  if (hi < 0) return 'eapc-down';
+  return 'eapc-ns';
+}
+
+function fmtNum(v) {
+  if (!v || v === '') return '<span class="val-empty">—</span>';
+  if (v.startsWith('N/A (not linked)')) return '<span class="val-na-linked">N/A (not linked)</span>';
+  if (v.startsWith('N/A (data absent)')) return '<span class="val-na-absent">N/A (data absent)</span>';
+  if (v === 'N/A') return '<span class="val-na-linked">N/A</span>';
+  if (v === '—') return '<span class="val-empty">—</span>';
+  const n = parseFloat(v.replace(/,/g,''));
+  if (!isNaN(n) && n < 0) return `<span class="val-negative">${v}</span>`;
+  return v;
+}
+
+function fmtEapc(v) {
+  if (!v || v === '') return '<span class="val-empty"></span>';
+  if (v === '—') return '<span class="eapc-dash">—</span>';
+  if (v.startsWith('N/A (not linked)')) return '<span class="val-na-linked">N/A (not linked)</span>';
+  if (v.startsWith('N/A (data absent)')) return '<span class="val-na-absent">N/A (data absent)</span>';
+  return `<span class="${eapcClass(v)}">${v}</span>`;
+}
+
+// ── BUILD TABLE 1 & 2 ─────────────────────────────────────────────────────────
+function buildTable12(data, tableEl) {
+  let html = `
+  <thead>
+    <tr class="hdr-top">
+      <th rowspan="3">Characteristics</th>
+      <th colspan="5">High BMI</th>
+      <th colspan="5">Smoking</th>
+    </tr>
+    <tr class="hdr-mid">
+      <th colspan="2">1990</th><th colspan="2">2023</th><th rowspan="2">EAPC (95% CI)</th>
+      <th colspan="2">1990</th><th colspan="2">2023</th><th rowspan="2">EAPC (95% CI)</th>
+    </tr>
+    <tr class="hdr-bot">
+      <th>Number</th><th>ASR<br>(per 100,000)</th>
+      <th>Number</th><th>ASR<br>(per 100,000)</th>
+      <th>Number</th><th>ASR<br>(per 100,000)</th>
+      <th>Number</th><th>ASR<br>(per 100,000)</th>
+    </tr>
+  </thead><tbody>`;
+
+  let alt = false;
+  data.forEach(row => {
+    const c   = row.Characteristics;
+    const cls = classifyRow(c);
+    if (cls === 'section') {
+      html += `<tr class="row-section"><td colspan="11">${c}</td></tr>`;
+      alt = false; return;
+    }
+    const rowCls = cls === 'pending' ? 'row-pending' : (alt ? 'row-alt' : '');
+    if (cls === 'data') alt = !alt;
+    html += `<tr class="${rowCls}">
+      <td>${c}</td>
+      <td class="num">${fmtNum(row.BMI_1990_Number)}</td>
+      <td class="num">${fmtNum(row.BMI_1990_ASR)}</td>
+      <td class="num">${fmtNum(row.BMI_2023_Number)}</td>
+      <td class="num">${fmtNum(row.BMI_2023_ASR)}</td>
+      <td class="eapc">${fmtEapc(row.BMI_EAPC_95CI)}</td>
+      <td class="num">${fmtNum(row.SMK_1990_Number)}</td>
+      <td class="num">${fmtNum(row.SMK_1990_ASR)}</td>
+      <td class="num">${fmtNum(row.SMK_2023_Number)}</td>
+      <td class="num">${fmtNum(row.SMK_2023_ASR)}</td>
+      <td class="eapc">${fmtEapc(row.SMK_EAPC_95CI)}</td>
+    </tr>`;
+  });
+  html += '</tbody>';
+  tableEl.innerHTML = html;
+}
+
+// ── BUILD TABLE 3 ─────────────────────────────────────────────────────────────
+function buildTable3(data, tableEl) {
+  let html = `
+  <thead>
+    <tr class="hdr-top">
+      <th rowspan="3" style="min-width:120px">Cancer Type</th>
+      <th rowspan="3" style="min-width:190px;text-align:left">Risk Factor</th>
+      <th colspan="5">Deaths</th>
+      <th colspan="5">DALYs</th>
+    </tr>
+    <tr class="hdr-mid">
+      <th colspan="2">1990</th><th colspan="2">2023</th><th rowspan="2">EAPC (95% CI)</th>
+      <th colspan="2">1990</th><th colspan="2">2023</th><th rowspan="2">EAPC (95% CI)</th>
+    </tr>
+    <tr class="hdr-bot">
+      <th>Number</th><th>ASR<br>(per 100,000)</th>
+      <th>Number</th><th>ASR<br>(per 100,000)</th>
+      <th>Number</th><th>ASR<br>(per 100,000)</th>
+      <th>Number</th><th>ASR<br>(per 100,000)</th>
+    </tr>
+  </thead><tbody>`;
+
+  // Group by cancer type for rowspan
+  let prevCancer = null, cancerCount = {};
+  data.forEach(r => { cancerCount[r.CancerType] = (cancerCount[r.CancerType]||0)+1; });
+
+  let alt = false;
+  data.forEach(row => {
+    const isNewCancer = row.CancerType !== prevCancer;
+    const rowCls = alt ? 'row-alt' : '';
+    alt = !alt;
+
+    let cancerCell = '';
+    if (isNewCancer) {
+      cancerCell = `<td class="cancer-label" rowspan="${cancerCount[row.CancerType]}">${row.CancerType}</td>`;
+      prevCancer = row.CancerType;
+    }
+
+    html += `<tr class="${rowCls}">
+      ${cancerCell}
+      <td class="rf-label">${row.RiskFactor}</td>
+      <td class="num">${fmtNum(row.D_N90)}</td>
+      <td class="num">${fmtNum(row.D_A90)}</td>
+      <td class="num">${fmtNum(row.D_N23)}</td>
+      <td class="num">${fmtNum(row.D_A23)}</td>
+      <td class="eapc">${fmtEapc(row.D_EAPC)}</td>
+      <td class="num">${fmtNum(row.DA_N90)}</td>
+      <td class="num">${fmtNum(row.DA_A90)}</td>
+      <td class="num">${fmtNum(row.DA_N23)}</td>
+      <td class="num">${fmtNum(row.DA_A23)}</td>
+      <td class="eapc">${fmtEapc(row.DA_EAPC)}</td>
+    </tr>`;
+  });
+  html += '</tbody>';
+  tableEl.innerHTML = html;
+}
+
+// ── TAB SWITCHING ─────────────────────────────────────────────────────────────
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+buildTable12(T1, document.getElementById('tbl1'));
+buildTable12(T2, document.getElementById('tbl2'));
+buildTable3(T3, document.getElementById('tbl3'));
+</script>
+</body>
+</html>
